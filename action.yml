@@ -10,21 +10,40 @@ inputs:
   url:
     description: 'Rancher server URL'
     required: true
+  rancher_version:
+    description: 'Rancher CLI version'
+    required: false
+    default: 'v2.6.7'
+  kubectl_version:
+    description: 'Kubectl CLI version'
+    required: false
+    default: 'v1.25.0'
+  kubectl:
+    description: 'Whether to install kubectl'
+    required: false
 
 runs:
   using: "composite"
   steps:
-    - run: curl -LO -sS https://github.com/rancher/cli/releases/download/v2.6.7/rancher-linux-amd64-v2.6.7.tar.gz
+    - run: curl -LO -sS https://github.com/rancher/cli/releases/download/${{ inputs.rancher_version }}/rancher-linux-amd64-${{ inputs.rancher_version }}.tar.gz
       shell: bash
-    - run: tar -xf rancher-linux-amd64-v2.6.7.tar.gz
+    - run: tar -xf rancher-linux-amd64-${{ inputs.rancher_version }}.tar.gz
       shell: bash
-    - run: mv rancher-v2.6.7/rancher /usr/local/bin/rancher
-      shell: bash
-    - run: curl -LO -sS https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl
-      shell: bash
-    - run: mv kubectl /usr/local/bin/kubectl
-      shell: bash
-    - run: chmod +x /usr/local/bin/kubectl
+    - run: mv rancher-${{ inputs.rancher_version }}/rancher /usr/local/bin/rancher
       shell: bash
     - run: rancher login ${{ inputs.url }} --token ${{ inputs.token }} --context ${{ inputs.context }}
       shell: bash
+    - uses: peter-murray/value-as-flag-action@0.0.1
+      id: kubectl_flag
+      with:
+        value: ${{ inputs.kubectl }}
+        default: true
+    - run: curl -LO -sS https://dl.k8s.io/release/${{ inputs.kubectl_version }}/bin/linux/amd64/kubectl
+      shell: bash
+      if: steps.kubectl_flag.outputs.value == 'true'
+    - run: mv kubectl /usr/local/bin/kubectl
+      shell: bash
+      if: steps.kubectl_flag.outputs.value == 'true'
+    - run: chmod +x /usr/local/bin/kubectl
+      shell: bash
+      if: steps.kubectl_flag.outputs.value == 'true'

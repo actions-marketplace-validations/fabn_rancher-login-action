@@ -2,6 +2,7 @@ on: [push]
 
 jobs:
   login:
+    name: Login with rancher and kubectl
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -10,4 +11,17 @@ jobs:
           token: ${{ secrets.RANCHER_TOKEN }}
           url: ${{ secrets.RANCHER_URL }}
           context: ${{ secrets.RANCHER_CONTEXT }}
-      - run: rancher ps
+      - run: rancher --version
+      - run: kubectl version --client
+  login-no-kubectl:
+    name: Login with rancher only
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          token: ${{ secrets.RANCHER_TOKEN }}
+          url: ${{ secrets.RANCHER_URL }}
+          context: ${{ secrets.RANCHER_CONTEXT }}
+          kubectl: false
+      - run: ls -la /usr/local/bin
