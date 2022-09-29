@@ -12,4 +12,4 @@ jobs:
           url: ${{ secrets.RANCHER_URL }}
           context: ${{ secrets.RANCHER_CONTEXT }}
       - run: rancher --version
-      - run: ls -la
+      - run: ls -la /home/runner/.rancher
