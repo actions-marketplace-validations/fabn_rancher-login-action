@@ -10,4 +10,4 @@ jobs:
           token: ${{ secrets.RANCHER_TOKEN }}
           url: ${{ secrets.RANCHER_URL }}
           context: ${{ secrets.RANCHER_CONTEXT }}
-      - run: rancher up
+      - run: rancher ps
