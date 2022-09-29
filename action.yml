@@ -21,14 +21,16 @@ runs:
       shell: bash
     - run: tar -xvf rancher-linux-amd64-v2.6.7.tar.gz
       shell: bash
-    - run: ls -la # Shows everything
-      shell: bash
     - run: mv rancher-v2.6.7/rancher /usr/local/bin/rancher
       shell: bash
     - run: curl -LO https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl
       shell: bash
+    - run: mv kubectl /usr/local/bin/kubectl
+      shell: bash
     #- run: rancher login ${{ inputs.url }} --token ${{ inputs.token }}
     - run: rancher --version
       shell: bash
-    - run: ls -l ~/.ranchcli2.json
+    - run: kubectl --version
+      shell: bash
+    - run: ls -la
       shell: bash
