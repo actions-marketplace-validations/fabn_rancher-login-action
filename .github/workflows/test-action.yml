@@ -5,11 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Test login
-        uses: ./
+      - uses: ./
         with:
           token: ${{ secrets.RANCHER_TOKEN }}
           url: ${{ secrets.RANCHER_URL }}
           context: ${{ secrets.RANCHER_CONTEXT }}
-      - run: rancher --version
-      - run: ls -la /home/runner/.rancher
+      - run: rancher up
