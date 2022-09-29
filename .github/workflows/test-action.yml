@@ -12,7 +12,7 @@ jobs:
           url: ${{ secrets.RANCHER_URL }}
           context: ${{ secrets.RANCHER_CONTEXT }}
       - run: rancher --version
-      - run: kubectl version --short
+      - run: kubectl version --client
   login-no-kubectl:
     name: Login with rancher only
     runs-on: ubuntu-latest
