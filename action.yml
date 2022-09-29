@@ -1,0 +1,29 @@
+name: 'Rancher Login Action'
+description: 'Login into Rancher instance and select project to work with'
+inputs:
+  context:
+    description: 'Rancher context (numeric project identifier)'
+    required: true
+  namespace:
+    description: 'Rancher namespace'
+    required: true
+  token:
+    description: 'Rancher API token'
+    required: true
+  url:
+    description: 'Rancher server URL'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - run: curl -LO https://github.com/rancher/cli/releases/download/v2.6.7/rancher-linux-amd64-v2.6.7.tar.gz
+      shell: bash
+    - run: tar -xvf rancher-linux-amd64-v2.6.7.tar.gz
+      shell: bash
+    - run: ls -la # Shows everything
+      shell: bash
+    - run: ls -l ~/.ranchcli2.json
+      shell: bash
+    - run: curl -LO https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl
+      shell: bash

@@ -1,0 +1,8 @@
+on: [push]
+
+jobs:
+  login:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test login
+        uses: ./
