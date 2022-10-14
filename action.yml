@@ -1,5 +1,8 @@
 name: 'Rancher Login Action'
 description: 'Login into Rancher instance and select project to work with'
+branding:
+  icon: log-in
+  color: green
 inputs:
   context:
     description: 'Rancher context (numeric project identifier)'
