@@ -33,7 +33,7 @@ runs:
       shell: bash
     - run: rancher login ${{ inputs.url }} --token ${{ inputs.token }} --context ${{ inputs.context }}
       shell: bash
-    - uses: peter-murray/value-as-flag-action@0.0.1
+    - uses: peter-murray/value-as-flag-action@v1.0.0
       id: kubectl_flag
       with:
         value: ${{ inputs.kubectl }}
